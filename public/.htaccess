@@ -44,6 +44,9 @@ Options -Indexes
 	ErrorDocument 404 index.php
 </IfModule>
 
+# Set Development Mode
+SetEnv CI_ENVIRONMENT development
+
 # Disable server signature start
 ServerSignature Off
 # Disable server signature end

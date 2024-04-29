@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost:8080/vs_ss24_kitchen/public/';
+    public string $baseURL = 'http://localhost/vs_ss24_kitchen/public/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.

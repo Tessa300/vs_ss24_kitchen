@@ -41,4 +41,20 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public $product = [
+        'name' => 'required',
+        'price_per_unit' => 'required|numeric',
+    ];
+
+    public $product_errors = [
+        'name' => [
+            'required' => 'Bitte geben Sie einen Namen ein.'
+        ],
+        'price_per_unit' => [
+            'required' => 'Bitte geben Sie einen Preis ein.',
+            'numeric' => 'Der Preis muss eine Zahl sein.'
+        ]
+    ];
+
 }

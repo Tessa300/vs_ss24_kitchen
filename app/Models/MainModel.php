@@ -10,4 +10,19 @@ class MainModel extends Model
         return $query->getResultArray();
     }
 
+    public function getProduct($product_type_id){
+        $query = $this->db->query("Select * from product_types where product_type_id = $product_type_id;");
+        return $query->getRowArray();
+    }
+
+    public function getOpenOrders() {
+        $query = $this->db->query("SELECT * FROM orders left join order_products on order_products.order_id = orders.order_id left join product_types on product_types.product_type_id = order_products.product_type_id WHERE status != 'delivered' ORDER BY order_datetime;");
+        return $query->getResultArray();
+    }
+
+    public function updateProduct($vals){
+        $query = $this->db->query("UPDATE product_types SET name = '".$vals['name']."' WHERE product_type_id = ".$vals['product_type_id']);
+        return $query;
+    }
+
 }

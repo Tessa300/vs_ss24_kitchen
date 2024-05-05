@@ -22,6 +22,7 @@ class Products extends BaseController
         }else{
             // Einzelnes Produkt anzeigen
             $data['product'] = $this->mainModel->getProduct($product_type_id);
+            $data['unit_symbols'] = ['kg', 'l', 'Stk.', 'Port.'];
 
             echo view('templates/header');
             echo view('pages/product', $data);

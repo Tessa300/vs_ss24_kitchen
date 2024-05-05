@@ -43,17 +43,32 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
 
     public $product = [
-        'name' => 'required',
+        'name' => 'required|trim',
         'price_per_unit' => 'required|numeric',
+        'is_meal' => 'required|in_list[0,1]',
+        'unit_symbol' => 'required|in_list[kg,l,St.,Port.]',
+        'enabled' => 'required|in_list[0,1]',
     ];
 
     public $product_errors = [
         'name' => [
-            'required' => 'Bitte geben Sie einen Namen ein.'
+            'required' => 'Bitte geben Sie einen Namen für das Produkt an.'
         ],
         'price_per_unit' => [
-            'required' => 'Bitte geben Sie einen Preis ein.',
+            'required' => 'Bitte geben Sie einen Preis für das Produkt an.',
             'numeric' => 'Der Preis muss eine Zahl sein.'
+        ],
+        'is_meal' => [
+            'required' => 'Bitte geben Sie an, ob das Produkt ein Gericht ist.',
+            'in_list' => 'Geben Sie nur 1 oder 0 an.'
+        ],
+        'unit_symbol' => [
+            'required' => 'Bitte geben Sie die Einheit für das Produkt an.',
+            'in_list' => 'Geben Sie nur kg, l, St. oder Port. an.'
+        ],
+        'enabled' => [
+            'required' => 'Bitte geben Sie an, ob das Produkt aktiv ist.',
+            'in_list' => 'Geben Sie nur 1 oder 0 an.'
         ]
     ];
 

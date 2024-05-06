@@ -18,7 +18,7 @@
         <label class="sr-only col-sm-2 col-form-label" for="inlineFormInputGroup">Preis</label>
         <div class="col-sm-5">
             <div class="">
-                <input type="number" class="form-control <?= isset($error['price_per_unit'])?'is-invalid':'' ?>" id="price_per_unit" name="price_per_unit" placeholder="1" value="<?= isset($product['price_per_unit']) ? $product['price_per_unit'] : ''; ?>" required>
+                <input type="number" min="0" step="0.01" class="form-control <?= isset($error['price_per_unit'])?'is-invalid':'' ?>" id="price_per_unit" name="price_per_unit" placeholder="1" value="<?= isset($product['price_per_unit']) ? $product['price_per_unit'] : ''; ?>" required>
                 <div class="invalid-feedback"><?= (isset($error['price_per_unit']))?$error['price_per_unit']:'' ?></div>
             </div>
         </div>

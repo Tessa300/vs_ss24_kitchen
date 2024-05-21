@@ -1,6 +1,10 @@
-<h1> <?= $product['name'] ?> </h1>
+<?php if(isset($product)): ?>
+    <h1> <?= $product['name'] ?> </h1>
+<?php else: ?>
+    <h1>Neues Produkt anlegen</h1>
+<?php endif; ?>
 
-<form action="<?=site_url('products/update/'.$product['product_type_id'])?>" method="POST" id="product_form">
+<form action="<?=site_url('products/'.((isset($product)) ? 'update/'.$product['product_type_id'] : 'create'))?>" method="POST" id="product_form">
 
     <div class="form-group mb-2 row">
         <label for="name" class="col-sm-2 col-form-label">Name</label>
@@ -83,6 +87,11 @@
 
     <? if(isset($product)): ?><button class="btn" type="button" id="edit_button" onclick="enableForm('product_form')">Abbrechen</button><? endif; ?>
     <button class="btn" type="submit" id="save_button">Speichern</button>
+    <? if(isset($canBeDeleted) && $canBeDeleted): ?>
+        <a class="btn bg-danger" href="<?= site_url('/products/delete/'.$product['product_type_id']) ?>">Löschen</a>
+    <? endif; ?>
+
+
 </form>
 
 <script>

@@ -20,9 +20,34 @@ class MainModel extends Model
         return $query->getResultArray();
     }
 
+    public function updateOrderProductFinished($order_id, $product_type_id){
+        $query = $this->db->query("UPDATE `order_products` SET `status` = 'delivered' WHERE `order_products`.`order_id` = $order_id AND `order_products`.`product_type_id` = $product_type_id;");
+    }
+
     public function updateProduct($vals){
         $query = $this->db->query("UPDATE `product_types` SET `name` = '".$vals['name']."', `price_per_unit` = '".$vals['price_per_unit']."', `is_meal` = '".$vals['is_meal']."', `unit_symbol` = '".$vals['unit_symbol']."', `enabled` = '".$vals['enabled']."' WHERE `product_types`.`product_type_id` = ".$vals['product_type_id']);
         return $query;
+    }
+
+    public function createProduct($vals){
+        $query = $this->db->query("INSERT INTO `product_types` (`product_type_id`, `name`, `price_per_unit`, `is_meal`, `unit_symbol`, `enabled`) VALUES (NULL, '".$vals['name']."', '".$vals['price_per_unit']."', '".$vals['is_meal']."', '".$vals['unit_symbol']."', '".$vals['enabled']."');");
+        return $this->db->insertID();
+    }
+
+    public function canProductBeDeleted($product_type_id){
+        $query = $this->db->query("Select * from order_products, batches, ingredients 
+where order_products.product_type_id = $product_type_id or batches.product_type_id = $product_type_id or 
+      ingredients.product_type_id_parent = $product_type_id or 
+      ingredients.product_type_id_sub = $product_type_id;");
+        return $query->getNumRows() == 0;
+    }
+
+    public function deleteProduct($product_type_id){
+        if($this->canProductBeDeleted($product_type_id)){
+            $query = $this->db->query("DELETE FROM `product_types` WHERE `product_type_id` = $product_type_id");
+            return $query;
+        }
+        return false;
     }
 
 }

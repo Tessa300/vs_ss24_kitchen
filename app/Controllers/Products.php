@@ -21,7 +21,10 @@ class Products extends BaseController
             echo view('templates/footer');
         }else{
             // Einzelnes Produkt anzeigen
-            $data['product'] = $this->mainModel->getProduct($product_type_id);
+            if($product_type_id != 'new') {
+                $data['product'] = $this->mainModel->getProduct($product_type_id);
+                $data['canBeDeleted'] = $this->mainModel->canProductBeDeleted($product_type_id);
+            }
             $data['unit_symbols'] = ['kg', 'l', 'Stk.', 'Port.'];
 
             echo view('templates/header');
@@ -43,10 +46,24 @@ class Products extends BaseController
             $this->mainModel->updateProduct($_POST);
             $this->returnView($product_type_id);
         }else{
-            echo "Falsch";
             $data['errors'] = $this->validation->getErrors();
             $this->returnView($product_type_id, $data);
         }
+    }
+
+    public function postCreate(){
+        if($this->validation->run($_POST, 'product')){
+            $product_type_id = $this->mainModel->createProduct($_POST);
+            $this->returnView($product_type_id);
+        }else{
+            $data['errors'] = $this->validation->getErrors();
+            $this->returnView("new", $data);
+        }
+    }
+
+    public function getDelete($product_type_id){
+        $this->mainModel->deleteProduct($product_type_id);
+        return redirect()->to(site_url('products/'));
     }
 
 

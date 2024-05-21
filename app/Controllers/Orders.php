@@ -18,4 +18,9 @@ class Orders extends BaseController
         echo view("templates/footer");
     }
 
+    public function postFinished($order_id, $product_type_id){
+        $data['orders'] = $this->MainModel->updateOrderProductFinished($order_id, $product_type_id);
+        return redirect()->to(site_url('orders/'));
+    }
+
 }
